@@ -1,5 +1,15 @@
 # Haste
 
+## Local Modifications
+
+This branch of haste-server implements generic file uploading.
+
+Drag any file in the browser window to upload it, after upload it will be
+accessible at `<installation_url>/files/<key>` and it will be served by haste
+with the `Content-Type` that was used to upload it.
+
+## Original Description
+
 Haste is an open-source pastebin software written in node.js, which is easily
 installable in any network.  It can be backed by either redis or filesystem,
 and has a very easy adapter interface for other stores.  A publicly available
