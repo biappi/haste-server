@@ -201,3 +201,41 @@ textarea {
     border: 5px solid #333;
 }
 
+/* perpli.me */
+
+#header {
+    text-align: left;
+    padding: 0px 20px 0px 10px;
+}
+
+#header h1 {
+    margin: 0;
+    font-size: 25px;
+    font-weight: normal;
+    font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+#header a {
+    text-decoration: none;
+    color: #09C;
+}
+
+#header a:link,
+#header a:visited
+{
+    color: #09C;
+}
+
+
+#header a:hover
+{
+    color: white;
+}
+
+#header p {
+    font-family: 'Gloria Hallelujah', cursive;
+    font-size: 13px;
+    margin: .5em 0 0 0;
+    padding: 0;
+    color: #999;
+}
