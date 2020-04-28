@@ -98,6 +98,7 @@ var haste = function(appName, options) {
   this.options = options;
   this.configureShortcuts();
   this.configureButtons();
+  this.configureDrop();
   // If twitter is disabled, hide the button
   if (!options.twitter) {
     $('#box2 .twitter').hide();
@@ -360,6 +361,92 @@ haste.prototype.configureShortcuts = function() {
       }
     }
   });
+};
+
+haste.prototype.configureDrop = function() {
+
+    var zelf = this;
+
+    this.$textarea.on(
+        'dragover',
+        function(e) {
+            //console.log("dragover", e);
+            e.preventDefault();
+        }
+    );
+
+    this.$textarea.on(
+        'drop',
+        function(e) {
+            e.preventDefault();
+
+            console.log("DROP", e);
+
+            var files = e.originalEvent.dataTransfer.files;
+
+            if (files.length != 1) {
+                zelf.showMessage('Error uploading file', 'error');
+                $('#droparea').hide();
+            }
+            else {
+                var file = files[0]
+
+                $('#drop-box').text('Uploading')
+                $('#droparea').addClass('uploading');
+
+                var formData = new FormData()
+                formData.append('data', file)
+
+                fetch(
+                    "/files",
+                    {
+                        method: 'POST',
+                        body: formData
+                    }
+                )
+                    .then(function (response) {
+                      return response.json();
+                    })
+                    .then(function(response) {
+                        $('#droparea').hide();
+                        window.location.href = '/files/' + response.key;
+                    }).catch(function(e) {
+                        console.log(e);
+                        $('#droparea').hide();
+                        zelf.showMessage('Error uploading file', 'error');
+                    });
+            }
+
+        }
+    );
+
+    this.$textarea.on(
+        'dragenter',
+        function(e) {
+            $('#drop-box').text('Drop here to upload')
+            $("#droparea").removeClass('uploading');
+            $('#droparea').show();
+            console.log("dragenter", e);
+        }
+    );
+
+    this.$textarea.on(
+        'dragleave',
+        function(e) {
+            $('#droparea').hide();
+            console.log("dragleave", e);
+        }
+    );
+
+    this.$textarea.on(
+        'dragexit',
+        function(e) {
+            $('#droparea').hide();
+            console.log("dragexit", e);
+        }
+    );
+
+    $('#droparea').hide();
 };
 
 ///// Tab behavior in the textarea - 2 spaces per tab

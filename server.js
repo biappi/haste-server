@@ -118,11 +118,21 @@ app.use(route(function(router) {
   router.post('/documents', function(request, response) {
     return documentHandler.handlePost(request, response);
   });
+  // add files
+  router.post('/files', function(request, response) {
+    return documentHandler.handlePostFile(request, response);
+  });
   // get documents
   router.get('/documents/:id', function(request, response) {
     var key = request.params.id.split('.')[0];
     var skipExpire = !!config.documents[key];
     return documentHandler.handleGet(key, response, skipExpire);
+  });
+  // get files
+  router.get('/files/:id', function(request, response) {
+    var key = request.params.id.split('.')[0];
+    var skipExpire = !!config.documents[key];
+    return documentHandler.handleGetFile(key, response, skipExpire);
   });
 }));
 
